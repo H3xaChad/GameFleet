@@ -1,5 +1,5 @@
 [project]
-name = "GameFleet"
+name = "gamefleet-backend"
 version = "0.1.0"
 description = "Test"
 readme = "README.md"
@@ -14,3 +14,11 @@ dependencies = [
     "sqlmodel>=0.0.25",
     "uvicorn>=0.37.0",
 ]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["gamefleet"]

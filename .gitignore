@@ -1,6 +1,65 @@
-**/__pycache__/
+# =========================
+#  Node / SvelteKit / Vite
+# =========================
 
-/db-dev
-/test
+node_modules/
+.svelte-kit/
+.build/
+.output/
+.vercel/
+.netlify/
+.wrangler/
+dist/
+build/
 
-**/.venv/
+# Logs
+npm-debug.log*
+pnpm-debug.log*
+*.log
+
+# Vite cache files
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# =========================
+#  Python / FastAPI / Alembic
+# =========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.venv/
+
+# Database and dev data
+db-dev/
+
+# Build artifacts
+*.egg-info/
+*.egg
+build/
+dist/
+
+# Logs / runtime files
+*.log
+*.pid
+
+# =========================
+#  Tooling / IDE / System
+# =========================
+
+# VSCode / JetBrains
+# .vscode/
+# .idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary or local files
+*.swp
+*.swo
+*~
+tmp/
+temp/
