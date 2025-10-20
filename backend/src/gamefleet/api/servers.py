@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import Sequence
 from pydantic import BaseModel
 
-from gamefleet.db.models.game_server_type import GameServerType
+from gamefleet.models.game_server_type import GameServerType
 from gamefleet.db.models.game_server import GameServer
 from gamefleet.services.game_server_service import GameServerService
 from gamefleet.services.live_server_info_service import LiveServerInfoService
@@ -25,7 +25,7 @@ class GameServerUpdate(BaseModel):
     port: int | None = None
     
 
-@router.get('', response_model=Sequence[GameServer])
+@router.get('', response_model=Sequence[GameServer], operation_id="getServers")
 async def get_servers(
     service: GameServerService = Depends(get_game_server_service)
 ):
@@ -34,8 +34,8 @@ async def get_servers(
 
 
 """Create a new game server."""
-@router.post('', response_model=GameServer)
-async def create_server(
+@router.post('', response_model=GameServer, operation_id="postServer")
+async def post_server(
     server_data: GameServerCreate,
     service: GameServerService = Depends(get_game_server_service)
 ):
@@ -43,7 +43,7 @@ async def create_server(
 
 
 """Get a specific game server by ID."""
-@router.get('/{server_id}', response_model=GameServer)
+@router.get('/{server_id}', response_model=GameServer, operation_id="getServerById")
 async def get_server(
     server_id: str,
     service: GameServerService = Depends(get_game_server_service)
@@ -55,7 +55,7 @@ async def get_server(
 
 
 """Update an existing game server."""
-@router.put('/{server_id}', response_model=GameServer)
+@router.put('/{server_id}', response_model=GameServer, operation_id="updateServer")
 async def update_server(
     server_id: str,
     server_data: GameServerUpdate,
@@ -68,7 +68,7 @@ async def update_server(
     return server
 
 
-@router.delete('/{server_id}')
+@router.delete('/{server_id}', operation_id="deleteServer")
 async def delete_server(
     server_id: str,
     service: GameServerService = Depends(get_game_server_service)
@@ -80,7 +80,7 @@ async def delete_server(
     return {"message": "Server deleted successfully"}
 
 
-@router.get('/by-type/{server_type}', response_model=Sequence[GameServer])
+@router.get('/by-type/{server_type}', response_model=Sequence[GameServer], operation_id="getServersByType")
 async def get_servers_by_type(
     server_type: GameServerType,
     service: GameServerService = Depends(get_game_server_service)
@@ -89,7 +89,7 @@ async def get_servers_by_type(
     return await service.get_servers_by_type(server_type)
 
 
-@router.get('/{server_id}/live-info', response_model=BaseServerInfo)
+@router.get('/{server_id}/live-info', response_model=BaseServerInfo, operation_id="getServerLiveInfoById")
 async def get_server_live_info_by_id(
     server_id: str,
     service: GameServerService = Depends(get_game_server_service)
@@ -105,7 +105,7 @@ async def get_server_live_info_by_id(
         port=server.port
     )
 
-@router.get("/supported_types")
+@router.get("/supported_types", response_model=Sequence[GameServerType], operation_id="getSupportedServerTypes")
 def supported_types() -> list[GameServerType]:
     """Get list of supported game server types."""
     return [game_server_type for game_server_type in GameServerType]

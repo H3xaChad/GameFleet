@@ -387,6 +387,40 @@ export class Api<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
   /**
+   * @description Get all game servers from the database.
+   *
+   * @tags servers
+   * @name GetServers
+   * @summary Get Servers
+   * @request GET:/api/servers
+   */
+  getServers = (params: RequestParams = {}) =>
+    this.request<GameServer[], any>({
+      path: `/api/servers`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags servers
+   * @name PostServer
+   * @summary Post Server
+   * @request POST:/api/servers
+   */
+  postServer = (data: GameServerCreate, params: RequestParams = {}) =>
+    this.request<GameServer, HTTPValidationError>({
+      path: `/api/servers`,
+      method: "POST",
+      body: data,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+
+  /**
    * No description
    *
    * @name RootGet
@@ -401,56 +435,16 @@ export class Api<
       ...params,
     });
 
-  api = {
-    /**
-     * @description Get all game servers from the database.
-     *
-     * @tags servers
-     * @name GetServersApiServersGet
-     * @summary Get Servers
-     * @request GET:/api/servers
-     */
-    getServersApiServersGet: (params: RequestParams = {}) =>
-      this.request<GameServer[], any>({
-        path: `/api/servers`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
+  serverId = {
     /**
      * No description
      *
      * @tags servers
-     * @name CreateServerApiServersPost
-     * @summary Create Server
-     * @request POST:/api/servers
-     */
-    createServerApiServersPost: (
-      data: GameServerCreate,
-      params: RequestParams = {},
-    ) =>
-      this.request<GameServer, HTTPValidationError>({
-        path: `/api/servers`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags servers
-     * @name GetServerApiServersServerIdGet
+     * @name GetServerById
      * @summary Get Server
      * @request GET:/api/servers/{server_id}
      */
-    getServerApiServersServerIdGet: (
-      serverId: string,
-      params: RequestParams = {},
-    ) =>
+    getServerById: (serverId: string, params: RequestParams = {}) =>
       this.request<GameServer, HTTPValidationError>({
         path: `/api/servers/${serverId}`,
         method: "GET",
@@ -462,11 +456,11 @@ export class Api<
      * No description
      *
      * @tags servers
-     * @name UpdateServerApiServersServerIdPut
+     * @name UpdateServer
      * @summary Update Server
      * @request PUT:/api/servers/{server_id}
      */
-    updateServerApiServersServerIdPut: (
+    updateServer: (
       serverId: string,
       data: GameServerUpdate,
       params: RequestParams = {},
@@ -484,14 +478,11 @@ export class Api<
      * @description Delete a game server.
      *
      * @tags servers
-     * @name DeleteServerApiServersServerIdDelete
+     * @name DeleteServer
      * @summary Delete Server
      * @request DELETE:/api/servers/{server_id}
      */
-    deleteServerApiServersServerIdDelete: (
-      serverId: string,
-      params: RequestParams = {},
-    ) =>
+    deleteServer: (serverId: string, params: RequestParams = {}) =>
       this.request<any, HTTPValidationError>({
         path: `/api/servers/${serverId}`,
         method: "DELETE",
@@ -500,14 +491,31 @@ export class Api<
       }),
 
     /**
+     * @description Get live information for a server by its database ID.
+     *
+     * @tags servers
+     * @name GetServerLiveInfoById
+     * @summary Get Server Live Info By Id
+     * @request GET:/api/servers/{server_id}/live-info
+     */
+    getServerLiveInfoById: (serverId: string, params: RequestParams = {}) =>
+      this.request<BaseServerInfo, HTTPValidationError>({
+        path: `/api/servers/${serverId}/live-info`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  byType = {
+    /**
      * @description Get all servers of a specific game type.
      *
      * @tags servers
-     * @name GetServersByTypeApiServersByTypeServerTypeGet
+     * @name GetServersByType
      * @summary Get Servers By Type
      * @request GET:/api/servers/by-type/{server_type}
      */
-    getServersByTypeApiServersByTypeServerTypeGet: (
+    getServersByType: (
       serverType: GameServerType,
       params: RequestParams = {},
     ) =>
@@ -517,42 +525,25 @@ export class Api<
         format: "json",
         ...params,
       }),
-
-    /**
-     * @description Get live information for a server by its database ID.
-     *
-     * @tags servers
-     * @name GetServerLiveInfoByIdApiServersServerIdLiveInfoGet
-     * @summary Get Server Live Info By Id
-     * @request GET:/api/servers/{server_id}/live-info
-     */
-    getServerLiveInfoByIdApiServersServerIdLiveInfoGet: (
-      serverId: string,
-      params: RequestParams = {},
-    ) =>
-      this.request<BaseServerInfo, HTTPValidationError>({
-        path: `/api/servers/${serverId}/live-info`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-
+  };
+  supportedTypes = {
     /**
      * @description Get list of supported game server types.
      *
      * @tags servers
-     * @name SupportedTypesApiServersSupportedTypesGet
+     * @name GetSupportedServerTypes
      * @summary Supported Types
      * @request GET:/api/servers/supported_types
      */
-    supportedTypesApiServersSupportedTypesGet: (params: RequestParams = {}) =>
+    getSupportedServerTypes: (params: RequestParams = {}) =>
       this.request<GameServerType[], any>({
         path: `/api/servers/supported_types`,
         method: "GET",
         format: "json",
         ...params,
       }),
-
+  };
+  containers = {
     /**
      * No description
      *
@@ -568,7 +559,8 @@ export class Api<
         format: "json",
         ...params,
       }),
-
+  };
+  start = {
     /**
      * No description
      *

@@ -3,7 +3,7 @@ from gamefleet.models.server_info import (
     BaseServerInfo, MinecraftServerInfo, FactorioServerInfo, 
     SatisfactoryServerInfo, ArkServerInfo, ServerStatus
 )
-from gamefleet.db.models.game_server_type import GameServerType
+from gamefleet.models.game_server_type import GameServerType
 from gamefleet.lib.query.minecraft import get_minecraft_server_info
 from gamefleet.lib.query.factorio import get_factorio_server_info
 from gamefleet.lib.query.satisfactory import get_satisfactory_server_info

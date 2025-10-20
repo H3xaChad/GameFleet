@@ -13,7 +13,7 @@ load_dotenv()
 
 # Import your models so they are registered with SQLModel
 from backend.src.gamefleet.db.models.game_server import GameServer  # noqa
-from backend.src.gamefleet.db.models.game_server_type import GameServerType  # noqa
+from backend.src.gamefleet.models.game_server_type import GameServerType  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

@@ -4,7 +4,7 @@ from sqlmodel import select
 from sqlalchemy import delete
 
 from gamefleet.db.models.game_server import GameServer
-from gamefleet.db.models.game_server_type import GameServerType
+from gamefleet.models.game_server_type import GameServerType
 
 
 class GameServerService:
