@@ -1,8 +1,11 @@
 <script lang="ts">
-    import { page } from '$app/stores'
+    import { page } from '$app/state'
     import { api } from '$lib/api/ApiService'
     import type { GameServer, BaseServerInfo, ServerStatus } from '$lib/api/Api'
     import { onMount, onDestroy } from 'svelte'
+    import StatusBadge from '$lib/components/StatusBadge.svelte'
+    import LoadingSpinner from '$lib/components/LoadingSpinner.svelte'
+    import StatCard from '$lib/components/StatCard.svelte'
 
     let server: GameServer | null = null
     let liveInfo: BaseServerInfo | null = null
@@ -10,19 +13,7 @@
     let error: string | null = null
     let refreshInterval: ReturnType<typeof setInterval>
 
-    const serverId = $page.params.id
-
-    const statusColors: Record<ServerStatus, string> = {
-        online: 'text-game-accent-600',
-        offline: 'text-game-error-600',
-        unknown: 'text-game-warning-600'
-    }
-
-    const statusBgColors: Record<ServerStatus, string> = {
-        online: 'bg-gradient-to-r from-game-accent-500 to-game-accent-600 shadow-neon-green',
-        offline: 'bg-gradient-to-r from-game-error-500 to-game-error-600',
-        unknown: 'bg-gradient-to-r from-game-warning-500 to-game-warning-600 shadow-neon-blue'
-    }
+    const serverId = page.params.id
 
     async function fetchServerData() {
         if (!serverId) {
@@ -113,12 +104,8 @@
     <div class="max-w-7xl mx-auto p-8">
         {#if loading}
             <!-- Loading state -->
-            <div class="flex items-center justify-center py-20">
-                <div class="relative loading-spinner">
-                    <div class="animate-spin rounded-full h-16 w-16 border-4 border-game-primary-200"></div>
-                    <div class="animate-spin rounded-full h-16 w-16 border-4 border-t-game-primary-600 absolute top-0"></div>
-                </div>
-                <span class="ml-4 text-lg text-slate-700 font-medium text-shadow">🔍 Loading server information...</span>
+            <div class="py-20">
+                <LoadingSpinner size="md" message="🔍 Loading server information..." />
             </div>
         {:else if error}
             <!-- Error state -->
@@ -147,11 +134,7 @@
                         
                         <!-- Status badge -->
                         <div class="flex items-center">
-                            <div class={`flex items-center px-6 py-3 rounded-full font-semibold text-white shadow-game transform hover:scale-105 transition-game ${statusBgColors[liveInfo.status]} ${liveInfo.status === 'online' ? 'status-online' : liveInfo.status === 'offline' ? 'status-offline' : 'status-unknown'}`}>
-                                <div class="w-3 h-3 rounded-full bg-white bg-opacity-90 mr-3 animate-pulse"></div>
-                                {liveInfo.status === 'online' ? '🟢' : liveInfo.status === 'offline' ? '🔴' : '🟡'} 
-                                {liveInfo.status.charAt(0).toUpperCase() + liveInfo.status.slice(1)}
-                            </div>
+                            <StatusBadge status={liveInfo.status} />
                         </div>
                     </div>
                 </div>
@@ -159,51 +142,32 @@
                 <!-- Server stats grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <!-- Players -->
-                    <div class="glass-card rounded-2xl shadow-game border border-white/50 p-6 hover:shadow-game-lg transition-game transform hover:-translate-y-1 hover:scale-105 game-card">
-                        <div class="flex items-center">
-                            <div class="p-4 bg-gradient-to-br from-game-primary-100 to-game-primary-200 rounded-xl shadow-game-inner">
-                                <span class="text-2xl">👥</span>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Players</p>
-                                <p class="text-3xl font-bold text-slate-900 text-shadow">
-                                    {liveInfo.players_online ?? 'N/A'}
-                                    {#if liveInfo.players_max}
-                                        <span class="text-xl text-slate-500">/ {liveInfo.players_max}</span>
-                                    {/if}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <StatCard
+                        icon="👥"
+                        title="Players"
+                        value={liveInfo.players_online ?? 'N/A'}
+                        subtitle={liveInfo.players_max ? `/ ${liveInfo.players_max}` : undefined}
+                        bgColor="from-game-primary-100 to-game-primary-200"
+                    />
 
                     <!-- Latency -->
                     {#if liveInfo.latency !== null}
-                        <div class="glass-card rounded-2xl shadow-game border border-white/50 p-6 hover:shadow-game-lg transition-game transform hover:-translate-y-1 hover:scale-105 game-card">
-                            <div class="flex items-center">
-                                <div class="p-4 bg-gradient-to-br from-game-accent-100 to-game-accent-200 rounded-xl shadow-game-inner">
-                                    <span class="text-2xl">⚡</span>
-                                </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Latency</p>
-                                    <p class="text-3xl font-bold text-slate-900 text-shadow">{liveInfo.latency}ms</p>
-                                </div>
-                            </div>
-                        </div>
+                        <StatCard
+                            icon="⚡"
+                            title="Latency"
+                            value={`${liveInfo.latency}ms`}
+                            bgColor="from-game-accent-100 to-game-accent-200"
+                        />
                     {/if}
 
                     <!-- Version -->
                     {#if liveInfo.version}
-                        <div class="glass-card rounded-2xl shadow-game border border-white/50 p-6 hover:shadow-game-lg transition-game transform hover:-translate-y-1 hover:scale-105 game-card">
-                            <div class="flex items-center">
-                                <div class="p-4 bg-gradient-to-br from-game-secondary-100 to-game-secondary-200 rounded-xl shadow-game-inner">
-                                    <span class="text-2xl">🔧</span>
-                                </div>
-                                <div class="ml-4">
-                                    <p class="text-sm font-semibold text-slate-600 uppercase tracking-wide">Version</p>
-                                    <p class="text-3xl font-bold text-slate-900 text-shadow">{liveInfo.version}</p>
-                                </div>
-                            </div>
-                        </div>
+                        <StatCard
+                            icon="🔧"
+                            title="Version"
+                            value={liveInfo.version}
+                            bgColor="from-game-secondary-100 to-game-secondary-200"
+                        />
                     {/if}
 
                     <!-- Security info -->

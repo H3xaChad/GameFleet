@@ -33,11 +33,14 @@
 
 /* Enhanced button interactions */
 .btn-game {
-  @apply relative overflow-hidden transition-all duration-300 transform;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1);
 }
 
 .btn-game:hover {
-  @apply scale-105;
+  transform: scale(1.05);
 }
 
 .btn-game::before {
@@ -57,7 +60,8 @@
 
 /* Game card enhancements */
 .game-card {
-  @apply relative overflow-hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .game-card::before {
@@ -80,7 +84,7 @@
 
 /* Status indicator animations */
 .status-online {
-  @apply animate-pulse;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
 }
 
@@ -89,7 +93,7 @@
 }
 
 .status-unknown {
-  @apply animate-pulse;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
 }
 

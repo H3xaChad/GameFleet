@@ -45,18 +45,14 @@ class FactorioServerInfo(BaseServerInfo):
 
 class SatisfactoryServerInfo(BaseServerInfo):
     """Satisfactory-specific server information."""
-    sub_state: Optional[int] = None
-    num_public_connections: Optional[int] = None
-    max_public_connections: Optional[int] = None
-    beacon_port: Optional[int] = None
-
+    session_name: Optional[str] = None
+    tech_tier: Optional[int] = None
+    game_phase: Optional[str] = None
+    total_game_duration: Optional[int] = None
+    avg_tick_rate: Optional[float] = None
 
 class ArkServerInfo(BaseServerInfo):
     """ARK-specific server information."""
     server_name: Optional[str] = None
-    game_id: Optional[str] = None
-    steam_id: Optional[str] = None
     day_time: Optional[str] = None
     official: Optional[bool] = None
-    pve: Optional[bool] = None
-    battle_eye: Optional[bool] = None

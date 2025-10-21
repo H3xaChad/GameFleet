@@ -10,7 +10,8 @@ dependencies = [
     "docker>=7.1.0",
     "fastapi>=0.118.0",
     "mcstatus>=12.0.5",
-    "python-dotenv>=1.1.1",
+    "satisfactory-api-client @ git+https://github.com/Programmer-Timmy/satisfactory-dedicated-server-api-SDK",
+    "python-dotenv>=1.0.1,<1.1.0",
     "sqlmodel>=0.0.25",
     "uvicorn>=0.37.0",
 ]

@@ -8,8 +8,6 @@ def get_minecraft_server_info(address: str, port: int = 25565) -> MinecraftServe
         server = JavaServer.lookup(f"{address}:{port}")
         status = server.status()
         
-        print(status)
-        
         return MinecraftServerInfo(
             status=ServerStatus.ONLINE,
             latency=status.latency,
@@ -25,9 +23,18 @@ def get_minecraft_server_info(address: str, port: int = 25565) -> MinecraftServe
             players_max=status.players.max,
             player_list=[player.name for player in status.players.sample] if status.players.sample else None,
         )
-        
-    except Exception as e:
+    except ConnectionRefusedError:
         return MinecraftServerInfo(
             status=ServerStatus.OFFLINE,
+            error_message="Server is offline or unreachable"
+        )
+    except TimeoutError:
+        return MinecraftServerInfo(
+            status=ServerStatus.OFFLINE,
+            error_message="Connection timed out"
+        )
+    except Exception as e:
+        return MinecraftServerInfo(
+            status=ServerStatus.UNKNOWN,
             error_message=str(e)
         )

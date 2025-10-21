@@ -99,7 +99,7 @@ async def get_server_live_info_by_id(
     if not server:
         raise HTTPException(status_code=404, detail="Server not found")
     
-    return LiveServerInfoService.get_server_info(
+    return await LiveServerInfoService.get_server_info(
         server_type=server.game,
         address=server.address,
         port=server.port

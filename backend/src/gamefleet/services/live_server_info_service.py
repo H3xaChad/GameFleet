@@ -15,7 +15,7 @@ class LiveServerInfoService:
     """Service for fetching live server information from game servers."""
     
     @staticmethod
-    def get_server_info(
+    async def get_server_info(
         server_type: GameServerType, 
         address: str,
         port: int
@@ -28,7 +28,7 @@ class LiveServerInfoService:
                 return get_factorio_server_info(address, port)
             
             case GameServerType.satisfactory:
-                return get_satisfactory_server_info(address, port)
+                return await get_satisfactory_server_info(address, port)
             
             case GameServerType.ark_ase:
                 return get_ark_ase_server_info(address, port)
@@ -46,7 +46,5 @@ class LiveServerInfoService:
             case _:
                 return BaseServerInfo(
                     status=ServerStatus.UNKNOWN,
-                    address=address,
-                    port=port,
                     error_message=f"Unsupported server type: {server_type}"
                 )
