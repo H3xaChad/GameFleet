@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@sfirew/minecraft-motd-parser':
+        specifier: ^1.1.6
+        version: 1.1.6
     devDependencies:
       '@eslint/compat':
         specifier: ^1.4.0
@@ -457,6 +461,9 @@ packages:
     resolution: {integrity: sha512-bf9PtUa0u8IXDVxzRToFQKsNCRz9qLYfR/MpECxl4mRoWYjAeFjgxj1XdZr2M/GNVpT05p+LgQOHopYDlUu6/w==}
     cpu: [x64]
     os: [win32]
+
+  '@sfirew/minecraft-motd-parser@1.1.6':
+    resolution: {integrity: sha512-DHh7sOD+o2RhzcCBxZGMwvNIq9ciUWNNuJ4ZYVmmSEzgaEI+dYhU1xp94UkEStH+/FFWNVYQm1cdHpsI8NCu5Q==}
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -1937,6 +1944,8 @@ snapshots:
 
   '@rollup/rollup-win32-x64-msvc@4.52.4':
     optional: true
+
+  '@sfirew/minecraft-motd-parser@1.1.6': {}
 
   '@standard-schema/spec@1.0.0': {}
 
