@@ -1,0 +1,26 @@
+services:
+
+  backend:
+    container_name: gamefleet-backend
+    network_mode: host
+    build:
+      context: ./backend
+      target: ${TARGET:-prod}
+    environment:
+      DB_HOST: ${DB_HOST:-localhost}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-gamefleet}
+      DB_USER: ${DB_USER:-gamefleet}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+  frontend:
+    container_name: gamefleet-frontend
+    build:
+      context: ./frontend
+      target: ${FRONTEND_TARGET:-node-server}
+    environment:
+      GAMEFLEET_API_URL: http://localhost:${BACKEND_PORT:-8000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend

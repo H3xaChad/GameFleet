@@ -3,7 +3,7 @@ from satisfactory_api_client.exceptions import APIError
 from satisfactory_api_client.data.minimum_privilege_level import MinimumPrivilegeLevel
 from typing import cast, TypedDict
 
-from gamefleet.models.server_info import SatisfactoryServerInfo, ServerStatus
+from gamefleet_backend.models.server_info import SatisfactoryServerInfo, ServerStatus
 
 
 class ServerGameState(TypedDict):

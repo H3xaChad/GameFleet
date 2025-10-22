@@ -1,8 +1,8 @@
 [project]
 name = "gamefleet-backend"
-version = "0.1.0"
-description = "Test"
-readme = "README.md"
+version = "0.2.0"
+description = "Placeholder :)"
+readme = ""
 requires-python = ">=3.13"
 dependencies = [
     "alembic>=1.16.5",
@@ -22,4 +22,4 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
-packages = ["gamefleet"]
+packages = ["gamefleet_backend"]

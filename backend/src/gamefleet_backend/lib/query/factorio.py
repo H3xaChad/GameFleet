@@ -1,4 +1,4 @@
-from gamefleet.models.server_info import FactorioServerInfo, ServerStatus
+from gamefleet_backend.models.server_info import FactorioServerInfo, ServerStatus
 
 
 def get_factorio_server_info(address: str, port: int = 34197) -> FactorioServerInfo:

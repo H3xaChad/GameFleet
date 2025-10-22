@@ -1,6 +1,6 @@
 from mcstatus import JavaServer
 
-from gamefleet.models.server_info import MinecraftServerInfo, ServerStatus
+from gamefleet_backend.models.server_info import MinecraftServerInfo, ServerStatus
 
 
 def get_minecraft_server_info(address: str, port: int = 25565) -> MinecraftServerInfo:

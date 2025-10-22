@@ -1,4 +1,4 @@
-from gamefleet.models.server_info import ArkServerInfo, ServerStatus
+from gamefleet_backend.models.server_info import ArkServerInfo, ServerStatus
 
 
 def get_ark_asa_server_info(address: str, port: int = 7778) -> ArkServerInfo:

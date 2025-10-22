@@ -3,8 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 from sqlalchemy import delete
 
-from gamefleet.db.models.game_server import GameServer
-from gamefleet.models.game_server_type import GameServerType
+from gamefleet_backend.db.models.game_server import GameServer
+from gamefleet_backend.models.game_server_type import GameServerType
 
 
 class GameServerService:

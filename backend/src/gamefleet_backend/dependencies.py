@@ -1,8 +1,8 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from gamefleet.db.session import get_session
-from gamefleet.services.game_server_service import GameServerService
+from gamefleet_backend.db.session import get_session
+from gamefleet_backend.services.game_server_service import GameServerService
 
 
 async def get_game_server_service(

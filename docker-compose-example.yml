@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: gamefleet-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-gamefleet}
+      POSTGRES_USER: ${DB_USER:-gamefleet}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - gamefleet_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+
+  backend:
+    container_name: gamefleet-backend
+    build:
+      context: ./backend
+      target: ${TARGET:-prod}
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-gamefleet}
+      DB_USER: ${DB_USER:-gamefleet}
+      DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      - postgres
+
+  frontend:
+    container_name: gamefleet-frontend
+    build:
+      context: ./frontend
+      target: ${FRONTEND_TARGET:-node-server}
+    environment:
+      GAMEFLEET_API_URL: http://localhost:${BACKEND_PORT:-8000}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    depends_on:
+      - backend
+
+volumes:
+  gamefleet_postgres_data:

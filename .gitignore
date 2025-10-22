@@ -28,11 +28,7 @@ vite.config.ts.timestamp-*
 __pycache__/
 *.py[cod]
 *$py.class
-
 .venv/
-
-# Database and dev data
-db-dev/
 
 # Build artifacts
 *.egg-info/
@@ -47,6 +43,12 @@ dist/
 # =========================
 #  Tooling / IDE / System
 # =========================
+
+# Database and dev data
+db-dev/
+
+# Env
+.env
 
 # VSCode / JetBrains
 # .vscode/

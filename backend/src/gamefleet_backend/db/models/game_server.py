@@ -1,7 +1,7 @@
 import uuid
 from sqlmodel import SQLModel, Field
 
-from gamefleet.models.game_server_type import GameServerType
+from gamefleet_backend.models.game_server_type import GameServerType
 
 class GameServer(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)

@@ -1,14 +1,14 @@
 from typing import Union
-from gamefleet.models.server_info import (
+from gamefleet_backend.models.server_info import (
     BaseServerInfo, MinecraftServerInfo, FactorioServerInfo, 
     SatisfactoryServerInfo, ArkServerInfo, ServerStatus
 )
-from gamefleet.models.game_server_type import GameServerType
-from gamefleet.lib.query.minecraft import get_minecraft_server_info
-from gamefleet.lib.query.factorio import get_factorio_server_info
-from gamefleet.lib.query.satisfactory import get_satisfactory_server_info
-from gamefleet.lib.query.ark_ase import get_ark_ase_server_info
-from gamefleet.lib.query.ark_asa import get_ark_asa_server_info
+from gamefleet_backend.models.game_server_type import GameServerType
+from gamefleet_backend.lib.query.minecraft import get_minecraft_server_info
+from gamefleet_backend.lib.query.factorio import get_factorio_server_info
+from gamefleet_backend.lib.query.satisfactory import get_satisfactory_server_info
+from gamefleet_backend.lib.query.ark_ase import get_ark_ase_server_info
+from gamefleet_backend.lib.query.ark_asa import get_ark_asa_server_info
 
 
 class LiveServerInfoService:

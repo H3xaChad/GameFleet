@@ -7,9 +7,18 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL is None:
-    raise ValueError("DATABASE_URL environment variable is not set")
+# Build DATABASE_URL from individual environment variables
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = os.getenv("DB_PORT", "5432")
+DB_NAME = os.getenv("DB_NAME", "gamefleet")
+DB_USER = os.getenv("DB_USER", "gamefleet")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "gamefleet")
+
+DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+# Fallback to legacy DATABASE_URL if provided
+if legacy_url := os.getenv("DATABASE_URL"):
+    DATABASE_URL = legacy_url
 
 engine = create_async_engine(DATABASE_URL)
 

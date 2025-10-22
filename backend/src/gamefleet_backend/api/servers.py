@@ -2,12 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import Sequence
 from pydantic import BaseModel
 
-from gamefleet.models.game_server_type import GameServerType
-from gamefleet.db.models.game_server import GameServer
-from gamefleet.services.game_server_service import GameServerService
-from gamefleet.services.live_server_info_service import LiveServerInfoService
-from gamefleet.dependencies import get_game_server_service
-from gamefleet.models.server_info import BaseServerInfo
+from gamefleet_backend.models.game_server_type import GameServerType
+from gamefleet_backend.db.models.game_server import GameServer
+from gamefleet_backend.services.game_server_service import GameServerService
+from gamefleet_backend.services.live_server_info_service import LiveServerInfoService
+from gamefleet_backend.dependencies import get_game_server_service
+from gamefleet_backend.models.server_info import BaseServerInfo
 
 
 router = APIRouter()
